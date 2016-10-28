@@ -5,11 +5,15 @@ export default class Ball {
         this.reset()
             // this.size = size;
         this.radius = 5;
-
+        this.bounceSound = new Audio('sounds/pong-01.wav');
+    		this.paddleSound = new Audio('sounds/pong-02.wav');
+    		this.goalSound = new Audio('sounds/pong-03.wav');
     }
     bounce() {
         if (this.y <= 0 + this.radius || this.y >= 150 - this.radius) {
             this.vy *= -1
+            this.bounceSound.play();
+
         }
 
     }
@@ -41,6 +45,8 @@ export default class Ball {
             if (inRightEnd) {
                 if (this.y >= player2.y + this.radius && this.y <= (player2.y + player2.height)) {
                     this.vx *= -1;
+                    this.paddleSound.play();
+
                 }
             }
 
@@ -50,6 +56,7 @@ export default class Ball {
             if (inLeftEnd) {
                 if (this.y >= player1.y - this.radius && this.y <= (player1.y + player1.height)) {
                     this.vx *= -1;
+                    this.paddleSound.play();
                 }
             }
         }
@@ -61,17 +68,20 @@ export default class Ball {
         this.y = this.height / 2;
         this.vy = Math.floor(Math.random() * 12 - 6); // y direction
         this.vx = (7 - Math.abs(this.vy)); // x direction
-
     }
     goal(leftScore, rightScore) {
         if (this.x <= 0 + this.radius) {
             leftScore.score++;
+            this.goalSound.play();
+
             this.reset();
         }
         if (this.x >= 300 - this.radius) {
             rightScore.score++;
             this.reset();
             this.vx *= -1;
+            this.goalSound.play();
+
         }
     }
 }
