@@ -40,36 +40,27 @@ export default class Ball {
     }
     paddleCollision(player1, player2) {
         if (this.vx > 0) {
-            const inRightEnd = player2.x <= this.x + this.width &&
-                player2.x > this.x - this.vx + this.width;
+
+            const inRightEnd = this.x+8 >= player2.x;
+
             if (inRightEnd) {
-                const collisionDiff = this.x + this.width - player2.x;
-                const k = collisionDiff / this.vx;
-                const y = this.vy * k + (this.y - this.vy);
-                const hitRightPaddle = y >= player2.y && y + this.height <=
-                    player2.y + player2.height;
-                if (hitRightPaddle) {
-                    this.x = player2.x - this.width;
-                    this.y = Math.floor(this.y - this.vy + this.vy * k);
-                    this.vx = -this.vx;
+                if (this.y >= player2.y + this.radius && this.y <= (player2.y + player2.height)) {
+                    this.vx *= -1;
                 }
             }
+
         } else {
-            const inLeftEnd = player1.x + player1.width >= this.x;
+            const inLeftEnd = this.x <= player1.x + player1.width+8;
+
             if (inLeftEnd) {
-                const collisionDiff = player1.x + player1.width - this.x;
-                const k = collisionDiff / -this.vx;
-                const y = this.vy * k + (this.y - this.vy);
-                const hitLeftPaddle = y >= player1.y && y + this.height <=
-                    player1.y + player1.height;
-                if (hitLeftPaddle) {
-                    this.x = player1.x + player1.width;
-                    this.y = Math.floor(this.y - this.vy + this.vy * k);
-                    this.vx = -this.vx;
+                if (this.y >= player1.y - this.radius && this.y <= (player1.y + player1.height)) {
+                    this.vx *= -1;
                 }
             }
         }
+
     }
+
     reset() {
         this.x = this.width / 2;
         this.y = this.height / 2;
@@ -78,9 +69,12 @@ export default class Ball {
 
     }
     goal() {
-        if (this.x <= 0 + this.radius || this.x >= 300 - this.radius) {
+        if (this.x <= 0 + this.radius) {
             this.reset();
-
+        }
+        if (this.x >= 300 - this.radius) {
+            this.reset();
+            this.vx *= -1;
         }
     }
 }
