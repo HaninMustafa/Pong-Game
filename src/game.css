@@ -69,11 +69,11 @@ h1 {
    margin-top: 20px;
 }
 #game {
-   background-color: black;
-   display: block;
-   height: 256px;
-   margin: 20px auto;
-   width: 512px;
+    background-color: #353535;
+    display: block;
+    height: 256px;
+    margin: 20px auto;
+    width: 512px;
 }
 .players {
    display: inline-flex;
