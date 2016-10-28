@@ -1,4 +1,3 @@
-// const size = 500;
 export default class Ball {
     constructor(height, width, boardHeight, boardWidth) {
         this.width = width
@@ -26,22 +25,18 @@ export default class Ball {
         this.y += this.vy;
 
     }
-    render(context, player1, player2) {
+    render(context, player1, player2,leftScore, rightScore) {
         this.bounce()
         this.move()
-        this.goal()
+        this.goal(leftScore, rightScore)
         this.draw(context);
         this.paddleCollision(player1, player2);
 
-        // const hitLeft = this.x >= this.width;
-        // const hitRight = this.x + this.size <= 0;
-        // const hitTop = this.y + this.size <= 0;
-        // const hitBottom = this.y >= this.height;
     }
     paddleCollision(player1, player2) {
         if (this.vx > 0) {
 
-            const inRightEnd = this.x+8 >= player2.x;
+            const inRightEnd = this.x + 8 >= player2.x;
 
             if (inRightEnd) {
                 if (this.y >= player2.y + this.radius && this.y <= (player2.y + player2.height)) {
@@ -50,7 +45,7 @@ export default class Ball {
             }
 
         } else {
-            const inLeftEnd = this.x <= player1.x + player1.width+8;
+            const inLeftEnd = this.x <= player1.x + player1.width + 8;
 
             if (inLeftEnd) {
                 if (this.y >= player1.y - this.radius && this.y <= (player1.y + player1.height)) {
@@ -68,11 +63,13 @@ export default class Ball {
         this.vx = (7 - Math.abs(this.vy)); // x direction
 
     }
-    goal() {
+    goal(leftScore, rightScore) {
         if (this.x <= 0 + this.radius) {
+            leftScore.score++;
             this.reset();
         }
         if (this.x >= 300 - this.radius) {
+            rightScore.score++;
             this.reset();
             this.vx *= -1;
         }

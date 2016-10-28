@@ -8,7 +8,7 @@ export default class ScoreBoard {
         ctx.font = "30px Helvetica";
         ctx.fillText(this.score, this.x, this.y);
     }
-    render(ctx) {
-        this.draw(ctx);
+    render(context) {
+        this.draw(context);
     }
 }

@@ -11,9 +11,7 @@ export default class Paddle {
         document.addEventListener('keydown', (event) => this.keyListner(event));
         console.log(keys);
     }
-    wallBounce() {
 
-    }
     keyListner(event) {
         switch (event.keyCode) {
             case this.keys.up:
